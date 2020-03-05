@@ -1,0 +1,8 @@
+{
+	"port": 8080,
+	"sapServer": "localhost:8000",
+    "root": "./",
+    "odataMapPath": "/odata",
+	"ui5Version": "1.66.1",
+	"useOfflineSource": true
+}
