@@ -11,18 +11,21 @@
 #include <model/ODataEntity.h>
 
 class RouteEntity: public ODataEntity {
-	Q_OBJECT
 public:
 
-	RouteEntity(QObject * parent) : ODataEntity(parent){
+	RouteEntity() : ODataEntity(){
 		this->description = "Route";
 		this->name = "Route";
 	};
+	RouteEntity(const RouteEntity &routeEntity) : ODataEntity(routeEntity){
+
+	}
 	virtual void deleteEntity() const;
 	virtual void update() const;
 	virtual void insert() const;
 	virtual QString getDescription();
 	virtual void get(QMap<QString, QVariant> keys, QUrlQuery query);
+	virtual ODataEntity* clone() const;
 };
 
 #endif /* REPS_HERP_FRONTENDPROVIDER_ENTITY_ROUTEENTITY_H_ */

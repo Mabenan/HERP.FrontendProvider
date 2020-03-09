@@ -30,7 +30,7 @@ void FrontendProviderPlugin::init(ApplicationServerInterface *app) {
 	ODataEntityContainer * routeEntityContainer = new ODataEntityContainer();
 	ODataSchema * schema1 = new ODataSchema("FrontendSchema", routeEntityContainer);
 
-	routeEntityContainer->entitySets.insert("RouteSet", new RouteEntitySet(this));
+	routeEntityContainer->entitySets.insert("RouteSet", new RouteEntitySet());
 	app->addValue("ODATA_SCHEMA_MAP", schema1);
 }
 void FrontendProviderPlugin::install(ApplicationServerInterface * app){

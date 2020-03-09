@@ -12,8 +12,8 @@
 #include <entity/RouteEntity.h>
 class RouteEntitySet: public ODataEntitySet {
 public:
-	RouteEntitySet(QObject * parent = nullptr) : ODataEntitySet(parent) {
-		this->entity = new RouteEntity(this);
+	RouteEntitySet() : ODataEntitySet() {
+		this->entity = new RouteEntity();
 		this->name = "RouteSet";
 
 
@@ -23,6 +23,7 @@ public:
 	virtual void deleteSet() const;
 	virtual void insertSet() const;
 	virtual ODataEntity* get(QMap<QString, QVariant> keys, QUrlQuery query);
+	virtual ODataEntitySet* clone() const;
 };
 
 #endif /* REPS_HERP_FRONTENDPROVIDER_ENTITY_ROUTEENTITYSET_H_ */

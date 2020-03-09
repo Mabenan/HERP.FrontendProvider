@@ -22,3 +22,7 @@ void RouteEntitySet::insertSet() const {
 ODataEntity* RouteEntitySet::get(QMap<QString, QVariant> keys,
 		QUrlQuery query) {
 }
+
+ODataEntitySet* RouteEntitySet::clone() const {
+	return new RouteEntitySet(*this);
+}

@@ -22,3 +22,7 @@ QString RouteEntity::getDescription() {
 
 void RouteEntity::get(QMap<QString, QVariant> keys, QUrlQuery query) {
 }
+
+ODataEntity* RouteEntity::clone() const {
+	return new RouteEntity(*this);
+}
