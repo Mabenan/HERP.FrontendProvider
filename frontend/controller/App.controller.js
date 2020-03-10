@@ -8,17 +8,16 @@ sap.ui.define([
 ], function (Device, Controller, JSONModel, Popover, Button, library) {
 	"use strict";
 
-	var ButtonType = library.ButtonType,
-		PlacementType = library.PlacementType;
-
 	return Controller.extend("herp.appframework.controller.App", {
 
 		onInit: function () {
+				this.oRouter = sap.ui.core.UIComponent.getRouterFor(this);
 		},
 
 		onItemSelect: function (oEvent) {
-			var oItem = oEvent.getParameter("item");
-			this.byId("pageContainer").to(this.getView().createId(oItem.getKey()));
+				var item = oEvent.getParameter('item');
+				var key = item.getKey();
+				this.oRouter.navTo(key, {});
 		},
 		onSideNavButtonPress: function () {
 			var oToolPage = this.byId("toolPage");

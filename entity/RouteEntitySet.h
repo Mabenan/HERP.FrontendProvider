@@ -11,13 +11,20 @@
 #include <model/ODataEntitySet.h>
 #include <entity/RouteEntity.h>
 class RouteEntitySet: public ODataEntitySet {
+private:
+	 ApplicationServerInterface * app;
 public:
-	RouteEntitySet() : ODataEntitySet() {
-		this->entity = new RouteEntity();
+	RouteEntitySet(ApplicationServerInterface * app) : ODataEntitySet() {
+		this->app = app;
+		this->entity = new RouteEntity(app);
 		this->name = "RouteSet";
 
 
 	};
+
+	RouteEntitySet(const RouteEntitySet &routeEntitySet) : ODataEntitySet(routeEntitySet){
+		this->app = routeEntitySet.app;
+	}
 	virtual void getSet(QUrlQuery query);
 	virtual void updateSet() const;
 	virtual void deleteSet() const;

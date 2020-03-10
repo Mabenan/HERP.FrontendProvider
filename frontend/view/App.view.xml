@@ -21,29 +21,18 @@
 		<tnt:sideContent>
 			<tnt:SideNavigation
 				expanded="true"
-				selectedKey="{/selectedKey}"
+				selectedKey="{view>/selectedKey}"
 				itemSelect=".onItemSelect">
-				<tnt:NavigationList items="{path: '/navigation'}">
+				<tnt:NavigationList items="{path: '/FrontendSchema.RouteEntitySet'}">
 					<tnt:NavigationListItem
-						text="{title}"
-						icon="{icon}"
-						enabled="{enabled}"
-						expanded="{expanded}"
-						items="{items}"
-						key="{key}">
-						<tnt:NavigationListItem
-							text="{title}"
-							key="{key}"
-							enabled="{enabled}" />
+						text="{routeName}"
+						key="{viewKey}">
 					</tnt:NavigationListItem>
 				</tnt:NavigationList>
 			</tnt:SideNavigation>
 		</tnt:sideContent>
 		<tnt:mainContents>
-			<NavContainer id="pageContainer" initialPage="page2">
-				<pages>
-				</pages>
-			</NavContainer>
+			<NavContainer id="AppContent" class="AppContent sapUiNoMargin sapUiNoContentPadding sapUiSizeCompact"></NavContainer>
 		</tnt:mainContents>
 	</tnt:ToolPage>
 	</mvc:View>

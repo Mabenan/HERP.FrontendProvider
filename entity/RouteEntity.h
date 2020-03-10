@@ -9,15 +9,25 @@
 #define REPS_HERP_FRONTENDPROVIDER_ENTITY_ROUTEENTITY_H_
 
 #include <model/ODataEntity.h>
+#include <ApplicationServerInterface.h>
+#include <HERP.FrontendProvider.Precompiled.h>
 
 class RouteEntity: public ODataEntity {
+
+private:
+	ApplicationServerInterface * app;
 public:
 
-	RouteEntity() : ODataEntity(){
+	RouteEntity(ApplicationServerInterface * app) : ODataEntity(){
 		this->description = "Route";
 		this->name = "Route";
+		this->app = app;
+		this->property.insert("routeName", new ODataProperty("Edm.String", true));
+		this->property.insert("viewKey", new ODataProperty("Edm.String", false));
 	};
 	RouteEntity(const RouteEntity &routeEntity) : ODataEntity(routeEntity){
+
+		this->app = routeEntity.app;
 
 	}
 	virtual void deleteEntity() const;

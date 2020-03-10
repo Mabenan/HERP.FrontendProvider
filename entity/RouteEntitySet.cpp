@@ -6,8 +6,19 @@
  */
 
 #include <entity/RouteEntitySet.h>
-
+#include <QList>
+#include <QObject>
+#include <data/AppRoute.h>
 void RouteEntitySet::getSet(QUrlQuery query) {
+
+	QList<QObject *> routes = app->getValues("APP_FRONTEND_ROUTES");
+	for(QObject * routeObject : routes){
+		AppRoute * appRoute = static_cast<AppRoute *>(routeObject);
+		RouteEntity * entity = new RouteEntity(this->app);
+		entity->data.insert("routeName", appRoute->routeName);
+		entity->data.insert("viewKey", appRoute->viewKey);
+	}
+
 }
 
 void RouteEntitySet::updateSet() const {
