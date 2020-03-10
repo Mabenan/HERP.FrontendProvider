@@ -7,7 +7,7 @@
 
 #include <data/AppRoute.h>
 
-AppRoute::AppRoute() {
+AppRoute::AppRoute() : QObject() {
 	// TODO Auto-generated constructor stub
 
 }

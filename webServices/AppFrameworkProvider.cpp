@@ -31,24 +31,39 @@ QHttpServerResponse AppFrameworkProvider::execute(
 	if(requestedFile == "manifest.json"){
 	    QFile jsonFile(currentDir.absoluteFilePath(requestedFile));
 	    jsonFile.open(QFile::ReadOnly);
-		QJsonDocument manifest = QJsonDocument::fromJson(jsonFile.readAll());
-		QJsonArray routes = QJsonArray();
-		QJsonObject targets = QJsonObject();
+	    QJsonObject manifest = QJsonDocument::fromJson(jsonFile.readAll()).object();
+		QJsonObject sapui5 = manifest["sap.ui5"].toObject();
+		QJsonArray routes;
+		QJsonObject targets;
 		QList<QObject *> routeObjects = app->getValues("APP_FRONTEND_ROUTES");
 		for(QObject * routeObject : routeObjects){
 			AppRoute * appRoute = static_cast<AppRoute *>(routeObject);
-			QJsonObject jsonRoute();
-			jsonRoute["pattern"] = appRoute->viewKey;
-			jsonRoute["name"] = appRoute->viewKey;
-			jsonRoute["target"] = appRoute->viewKey;
+			QJsonObject jsonRoute;
+			jsonRoute["pattern"] = QJsonValue::fromVariant(QVariant::fromValue(appRoute->viewKey));
+			jsonRoute["name"] = QJsonValue::fromVariant(QVariant::fromValue(appRoute->viewKey));
+			jsonRoute["target"] = QJsonValue::fromVariant(QVariant::fromValue(appRoute->viewKey));
 			QJsonObject appRouteTarget = QJsonObject();
 			appRouteTarget["viewName"] = appRoute->viewKey;
 			appRouteTarget["viewLevel"] = 1;
 			targets[appRoute->viewKey] = appRouteTarget;
 			routes.append(jsonRoute);
 		}
-		manifest["routing"]["routes"] = routes;
-		manifest["routing"]["targets"] = targets;
+		QJsonObject jsonRoute;
+		jsonRoute["pattern"] = QJsonValue::fromVariant(QVariant::fromValue(QString("")));
+		jsonRoute["name"] = QJsonValue::fromVariant(QVariant::fromValue(QString("home")));
+		jsonRoute["target"] = QJsonValue::fromVariant(QVariant::fromValue(QString("home")));
+		QJsonObject appRouteTarget = QJsonObject();
+		appRouteTarget["viewName"] = "Home";
+		appRouteTarget["viewLevel"] = 1;
+		targets["home"] = appRouteTarget;
+		routes.append(jsonRoute);
+		QJsonObject routing;
+		routing = sapui5["routing"].toObject();
+		routing["routes"] = routes;
+		routing["targets"] = targets;
+		sapui5["routing"] = routing;
+		manifest["sap.ui5"] = sapui5;
+		qDebug() << manifest;
 		return manifest;
 	}else{
 	return QHttpServerResponse::fromFile(currentDir.absoluteFilePath(requestedFile));

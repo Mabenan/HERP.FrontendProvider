@@ -9,8 +9,9 @@
 #define REPS_HERP_FRONTENDPROVIDER_DATA_APPROUTE_H_
 
 #include <HERP.FrontendProvider.Precompiled.h>
+#include <QObject>
 
-class HERP_FRONTEND_PROVIDER_DLL_EXPORT AppRoute : QObject {
+class HERP_FRONTEND_PROVIDER_DLL_EXPORT AppRoute :  public QObject {
 	Q_OBJECT
 public:
 
