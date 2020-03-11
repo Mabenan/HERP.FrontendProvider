@@ -1,0 +1,10 @@
+<mvc:View
+ controllerName="herp.appframework.controller.Home"
+ xmlns="sap.m"
+ xmlns:mvc="sap.ui.core.mvc"
+ xmlns:tnt="sap.tnt"
+ height="100%">
+ <Page >
+  <Label text="Test"></Label>
+ </Page>
+ </mvc:View>

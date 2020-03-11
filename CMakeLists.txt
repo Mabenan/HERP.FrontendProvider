@@ -29,10 +29,11 @@ target_precompile_headers(${target}
  )
 find_package(Qt5Core REQUIRED)
 find_package(Qt5HttpServer REQUIRED)
+find_package(Qt5Xml REQUIRED)
 if(${PACKAGE})
 find_package(ApplicationServer)
 endif()
-qt5_use_modules(${target} Core HttpServer)
+qt5_use_modules(${target} Core HttpServer Xml)
 
 target_include_directories(${target} PUBLIC 
  PUBLIC 
@@ -40,7 +41,7 @@ target_include_directories(${target} PUBLIC
     $<INSTALL_INTERFACE:${INCLUDE_FOLDER}>
 )    
 target_link_libraries(${target} ApplicationServerInterface ApplicationServerCore QxOrm ODataServer)
-#file(COPY "frontend" DESTINATION ${CMAKE_BINARY_DIR}/bin)
+file(COPY "frontend" DESTINATION ${CMAKE_BINARY_DIR}/bin)
 install(TARGETS ${target} EXPORT ${target} 
 LIBRARY DESTINATION "${LIB_FOLDER}"
     ARCHIVE DESTINATION "${LIB_FOLDER}"

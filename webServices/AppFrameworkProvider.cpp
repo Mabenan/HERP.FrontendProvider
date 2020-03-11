@@ -53,7 +53,7 @@ QHttpServerResponse AppFrameworkProvider::execute(
 		jsonRoute["name"] = QJsonValue::fromVariant(QVariant::fromValue(QString("home")));
 		jsonRoute["target"] = QJsonValue::fromVariant(QVariant::fromValue(QString("home")));
 		QJsonObject appRouteTarget = QJsonObject();
-		appRouteTarget["viewName"] = "Home";
+		appRouteTarget["viewName"] = "view.Home";
 		appRouteTarget["viewLevel"] = 1;
 		targets["home"] = appRouteTarget;
 		routes.append(jsonRoute);

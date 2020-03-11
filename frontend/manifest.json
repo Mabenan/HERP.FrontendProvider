@@ -13,7 +13,7 @@
 		"ach": "CA-UI5-DOC",
 		"dataSources": {
 			"default": {
-				"uri": "/odata",
+				"uri": "/odata/",
 				"type": "OData",
 				"settings": {
 					"odataVersion": "4.0"

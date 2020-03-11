@@ -23,7 +23,7 @@
 				expanded="true"
 				selectedKey="{view>/selectedKey}"
 				itemSelect=".onItemSelect">
-				<tnt:NavigationList items="{path: '/FrontendSchema.RouteEntitySet'}">
+				<tnt:NavigationList items="{path: '/RouteSet'}">
 					<tnt:NavigationListItem
 						text="{routeName}"
 						key="{viewKey}">

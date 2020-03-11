@@ -17,6 +17,7 @@ void RouteEntitySet::getSet(QUrlQuery query) {
 		RouteEntity * entity = new RouteEntity(this->app);
 		entity->data.insert("routeName", appRoute->routeName);
 		entity->data.insert("viewKey", appRoute->viewKey);
+		this->entities.append(entity);
 	}
 
 }
