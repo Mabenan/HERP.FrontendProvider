@@ -25,11 +25,11 @@ public:
 	RouteEntitySet(const RouteEntitySet &routeEntitySet) : ODataEntitySet(routeEntitySet){
 		this->app = routeEntitySet.app;
 	}
-	virtual void getSet(QUrlQuery query);
-	virtual void updateSet() const;
-	virtual void deleteSet() const;
-	virtual void insertSet() const;
-	virtual ODataEntity* get(QMap<QString, QVariant> keys, QUrlQuery query);
+	virtual void getSet(QUrlQuery query, QVariantMap head);
+	virtual void updateSet(QUrlQuery query, QVariantMap head) const;
+	virtual void deleteSet(QUrlQuery query, QVariantMap head) const;
+	virtual void insertSet(QUrlQuery query, QVariantMap head) const;
+	virtual ODataEntity* get(QMap<QString, QVariant> keys, QUrlQuery query, QVariantMap head);
 	virtual ODataEntitySet* clone() const;
 };
 

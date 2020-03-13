@@ -8,8 +8,7 @@
 #include <data/AppRoute.h>
 
 AppRoute::AppRoute() : QObject() {
-	// TODO Auto-generated constructor stub
-
+	this->neededAuthObject = nullptr;
 }
 
 AppRoute::~AppRoute() {

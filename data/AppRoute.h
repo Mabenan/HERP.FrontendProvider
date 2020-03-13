@@ -10,13 +10,14 @@
 
 #include <HERP.FrontendProvider.Precompiled.h>
 #include <QObject>
-
+#include <data/AuthObject.h>
 class HERP_FRONTEND_PROVIDER_DLL_EXPORT AppRoute :  public QObject {
 	Q_OBJECT
 public:
 
 	QString routeName;
 	QString viewKey;
+	AuthObject * neededAuthObject;
 
 	AppRoute();
 	virtual ~AppRoute();

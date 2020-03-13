@@ -40,7 +40,7 @@ target_include_directories(${target} PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
     $<INSTALL_INTERFACE:${INCLUDE_FOLDER}>
 )    
-target_link_libraries(${target} ApplicationServerInterface ApplicationServerCore QxOrm ODataServer)
+target_link_libraries(${target} ApplicationServerInterface ApplicationServerCore QxOrm ODataServer HERP.AuthorizationModule)
 file(COPY "frontend" DESTINATION ${CMAKE_BINARY_DIR}/bin)
 install(TARGETS ${target} EXPORT ${target} 
 LIBRARY DESTINATION "${LIB_FOLDER}"
