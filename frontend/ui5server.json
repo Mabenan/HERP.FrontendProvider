@@ -3,7 +3,7 @@
 	"sapServer": "localhost:8000",
     "root": "./",
     "odataMapPath": "/odata",
-	"pathsToRootToBack" : [ "/manifest.json"],
+	"pathsToRootToBack" : [ "/manifest.json", "/api"],
 	"ui5Version": "1.66.1",
 	"useOfflineSource": true
 }
