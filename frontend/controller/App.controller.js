@@ -11,6 +11,9 @@ sap.ui.define([
 	return Controller.extend("herp.appframework.controller.App", {
 
 		onInit: function () {
+				var viewModel = new sap.ui.model.json.JSONModel();
+				viewModel.setProperty("/loggedIn", false);
+				this.getView().setModel(viewModel,"view");
 				this.oRouter = sap.ui.core.UIComponent.getRouterFor(this);
 				this.username = new sap.m.Input({
 					
@@ -47,6 +50,7 @@ sap.ui.define([
 			this.loginDialog.open();
 		},
 		login: function(oEvent){
+			var self = this;
 			$.ajax({
 				type: "POST",
 				url: "/api/login",
@@ -59,9 +63,11 @@ sap.ui.define([
 				processData: false,
 				success: function (result) {
 					// process result
-					sap.ui.getCore().getModel().setHeaders({
-						"auth_guid" : result.auth_guid
-					});
+					self.getOwnerComponent().getModel().changeHttpHeaders({
+						"auth_guid" : result.auth_guid,
+						"user" : self.username.getValue()
+					})
+					self.getView().getModel("view").setProperty("/loggedIn", true);
 				},
 				error: function (e) {
 					 // log error in browser
