@@ -44,6 +44,18 @@ void RouteEntitySet::insertSet(QUrlQuery query, QVariantMap head) const {
 
 ODataEntity* RouteEntitySet::get(QMap<QString, QVariant> keys, QUrlQuery query,
 		QVariantMap head) {
+	QString routeName = keys["routeName"].toString();
+	RouteEntity *entity = new RouteEntity(this->app);
+
+	QList<QObject*> routes = app->getValues("APP_FRONTEND_ROUTES");
+	for (QObject *routeObject : routes) {
+		AppRoute *appRoute = static_cast<AppRoute*>(routeObject);
+		if(appRoute->routeName == routeName){
+			entity->data.insert("routeName", appRoute->routeName);
+			entity->data.insert("viewKey", appRoute->viewKey);
+		}
+	}
+	return entity;
 }
 
 ODataEntitySet* RouteEntitySet::clone() const {

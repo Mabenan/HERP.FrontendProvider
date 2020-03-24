@@ -4,7 +4,7 @@
 		"_version": "1.1.0",
 		"id": "herp.appframework",
 		"type": "application",
-		"i18n": "i18n/i18n.properties",
+		"i18n": "i18n/translations.properties",
 		"title": "{{appTitle}}",
 		"description": "{{appDescription}}",
 		"applicationVersion": {
@@ -46,10 +46,10 @@
 			"i18n": {
 				"type": "sap.ui.model.resource.ResourceModel",
 				"settings": {
-					"bundleName": "herp.appframework.i18n.i18n"
+					"bundleName": "herp.appframework.i18n.translations"
 				}
 			},
-			"": {
+			"default": {
 				"dataSource": "default",
 				"settings": {
 					"autoExpandSelect": true,

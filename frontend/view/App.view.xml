@@ -22,12 +22,7 @@
 						<OverflowToolbarLayoutData priority="NeverOverflow" minWidth="20px" />
 					</layoutData>
 				</ToolbarSpacer>
-				<Button visible="{= !${view>/loggedIn}}" text="Login" type="Transparent" press="handleLoginPress">
-					<layoutData>
-						<OverflowToolbarLayoutData priority="NeverOverflow" />
-					</layoutData>
-				</Button>
-				<Button visible="{= ${view>/loggedIn}}" text="{/Authorization.CurrentUser()/name}" type="Transparent" press="handleLogoutPress">
+				<Button  text="{= ${view>/loggedIn} === true ? ${default>/RouteSet(routeName=Home)/routeName} : ${i18n>login}}" type="Transparent" press="handleLoginPress">
 					<layoutData>
 						<OverflowToolbarLayoutData priority="NeverOverflow" />
 					</layoutData>
@@ -39,10 +34,10 @@
 				expanded="true"
 				selectedKey="{view>/selectedKey}"
 				itemSelect=".onItemSelect">
-				<tnt:NavigationList items="{path: '/RouteSet'}">
+				<tnt:NavigationList items="{default>/RouteSet}">
 					<tnt:NavigationListItem
-						text="{routeName}"
-						key="{viewKey}">
+						text="{default>routeName}"
+						key="{default>viewKey}">
 					</tnt:NavigationListItem>
 				</tnt:NavigationList>
 			</tnt:SideNavigation>

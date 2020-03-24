@@ -63,11 +63,12 @@ sap.ui.define([
 				processData: false,
 				success: function (result) {
 					// process result
-					self.getOwnerComponent().getModel().changeHttpHeaders({
+					self.getOwnerComponent().getModel("default").changeHttpHeaders({
 						"auth_guid" : result.auth_guid,
 						"user" : self.username.getValue()
 					})
 					self.getView().getModel("view").setProperty("/loggedIn", true);
+					self.getOwnerComponent().getModel("default").refresh();
 				},
 				error: function (e) {
 					 // log error in browser
