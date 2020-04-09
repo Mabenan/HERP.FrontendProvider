@@ -13,7 +13,7 @@ QString AppFrameworkProvider::getName() const {
 }
 
 QString AppFrameworkProvider::getRoute(ApplicationServerInterface *app) {
-	return "/(index.html|$|controller\/.*|view\/.*|formatter\/.*|[^\/]*$)";
+	return "/(index.html|$|controller\/.*|view\/.*|formatter\/.*|i18n\/.*|[^\/]*$)";
 }
 
 QHttpServerResponse AppFrameworkProvider::execute(

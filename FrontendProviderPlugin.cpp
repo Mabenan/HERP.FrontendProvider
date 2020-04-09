@@ -8,6 +8,7 @@
 #include <FrontendProviderPlugin.h>
 #include <webServices/UI5ResourceProvider.h>
 #include <webServices/AppFrameworkProvider.h>
+#include <webServices/PluginWebFilesProvider.h>
 #include <model/ODataEntityContainer.h>
 #include <entity/RouteEntitySet.h>
 #include <ODataSchema.h>
@@ -25,16 +26,16 @@ void FrontendProviderPlugin::init(ApplicationServerInterface *app) {
 
 	app->registerWebInterface(new UI5ResourceProvider(this));
 	app->registerWebInterface(new AppFrameworkProvider(this));
+	app->registerWebInterface(new PluginWebFilesProvider(this));
 	AppRoute * appRoute = new AppRoute();
 	appRoute->routeName = "Home";
 	appRoute->viewKey = "view.Home";
 	app->addValue("APP_FRONTEND_ROUTES", appRoute);
 
 	ODataEntityContainer * routeEntityContainer = new ODataEntityContainer();
-	ODataSchema * schema1 = new ODataSchema("FrontendSchema", routeEntityContainer);
 
 	routeEntityContainer->entitySets.insert("RouteSet", new RouteEntitySet(app));
-	app->addValue("ODATA_SCHEMA_MAP", schema1);
+	app->addValue("ODATA_ENTITY_MAP", routeEntityContainer);
 }
 void FrontendProviderPlugin::install(ApplicationServerInterface * app){
 

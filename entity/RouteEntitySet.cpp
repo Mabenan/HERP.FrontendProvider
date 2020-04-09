@@ -17,13 +17,13 @@ void RouteEntitySet::getSet(QUrlQuery query, QVariantMap head) {
 	for (QObject *routeObject : routes) {
 		AppRoute *appRoute = static_cast<AppRoute*>(routeObject);
 		bool auth = true;
-		if (appRoute->neededAuthObject != nullptr) {
+		if (appRoute->neededAuthObject != "") {
 			QVariantMap variantMap;
 			variantMap.insert("auth_guid", head["auth_guid"]);
 			auth = app->isUserAuthorized(head["user"].toString(),
-					appRoute->neededAuthObject->m_id, variantMap);
+					appRoute->neededAuthObject, variantMap);
 		}
-		if (auth) {
+		if (auth && !appRoute->hiddenRoute) {
 			RouteEntity *entity = new RouteEntity(this->app);
 			entity->data.insert("routeName", appRoute->routeName);
 			entity->data.insert("viewKey", appRoute->viewKey);
@@ -51,8 +51,17 @@ ODataEntity* RouteEntitySet::get(QMap<QString, QVariant> keys, QUrlQuery query,
 	for (QObject *routeObject : routes) {
 		AppRoute *appRoute = static_cast<AppRoute*>(routeObject);
 		if(appRoute->routeName == routeName){
+			bool auth = true;
+			if (appRoute->neededAuthObject != "") {
+				QVariantMap variantMap;
+				variantMap.insert("auth_guid", head["auth_guid"]);
+				auth = app->isUserAuthorized(head["user"].toString(),
+						appRoute->neededAuthObject, variantMap);
+			}
+			if (auth) {
 			entity->data.insert("routeName", appRoute->routeName);
 			entity->data.insert("viewKey", appRoute->viewKey);
+			}
 		}
 	}
 	return entity;

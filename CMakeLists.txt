@@ -17,7 +17,6 @@ file(GLOB HEADER
     "*.h"
     "*.hpp"
     )
-add_subdirectory(data)
 add_subdirectory(entity)
 add_subdirectory(command)
 add_subdirectory(webServices)
@@ -40,7 +39,7 @@ target_include_directories(${target} PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
     $<INSTALL_INTERFACE:${INCLUDE_FOLDER}>
 )    
-target_link_libraries(${target} ApplicationServerInterface ApplicationServerCore QxOrm ODataServer HERP.AuthorizationModule)
+target_link_libraries(${target} ApplicationServerInterface ApplicationServerCore QxOrm ODataServer HERP.AuthorizationModule HERP.FrontendInterface)
 file(COPY "frontend" DESTINATION ${CMAKE_BINARY_DIR}/bin)
 install(TARGETS ${target} EXPORT ${target} 
 LIBRARY DESTINATION "${LIB_FOLDER}"

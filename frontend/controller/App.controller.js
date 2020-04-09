@@ -4,9 +4,13 @@ sap.ui.define([
 	"sap/ui/model/json/JSONModel",
 	"sap/m/Popover",
 	"sap/m/Button",
-	"sap/m/library"
-], function (Device, Controller, JSONModel, Popover, Button, library) {
+	"sap/m/library",
+	"sap/m/MessageBox"
+], function (Device, Controller, JSONModel, Popover, Button, library, MessageBox) {
 	"use strict";
+
+	var ButtonType = library.ButtonType,
+		PlacementType = library.PlacementType;
 
 	return Controller.extend("herp.appframework.controller.App", {
 
@@ -46,10 +50,74 @@ sap.ui.define([
 				var key = item.getKey();
 				this.oRouter.navTo(key, {});
 		},
-		handleLoginPress: function(oEvent){
-			this.loginDialog.open();
+		handleUserButtonPressed: function(event){
+			var self = this;
+			if(this.getView().getModel("view").getProperty("/loggedIn")){
+
+			var oPopover = new Popover({
+				showHeader: false,
+				placement: PlacementType.Bottom,
+				content: [
+					new Button({
+						text: 'Settings',
+						type: ButtonType.Transparent,
+						press: function(oEvent){
+							self.settingsPressed(oEvent);
+							oPopover.close();
+						}
+					}),
+					new Button({
+						text: 'Logout',
+						type: ButtonType.Transparent,
+						press: function(oEvent){
+							self.logoutPressed(oEvent);
+							oPopover.close();
+						}
+					})
+				]
+			}).addStyleClass('sapMOTAPopover sapTntToolHeaderPopover');
+
+			oPopover.openBy(event.getSource());
+			}else{
+				this.loginDialog.open()
+
+			}
 		},
-		login: function(oEvent){
+		settingsPressed(oEvent){
+			this.oRouter.navTo("auth.view.Settings", {});
+
+		},
+		logoutPressed(oEvent){
+			var self = this;
+			$.ajax({
+				type: "POST",
+				url: "/api/logout",
+				contentType: "application/json; charset=utf-8",
+				data: JSON.stringify({
+					user: self.getView().getModel("view").getProperty("/user")
+				}),
+				dataType: "json",
+				beforeSend: function(request) {
+				  request.setRequestHeader("auth_guid", self.getView().getModel("view").getProperty("/auth_guid"));
+				},
+				processData: false,
+				success: function (result) {
+					// process result
+					self.getOwnerComponent().getModel("default").changeHttpHeaders({
+						"auth_guid": "-",
+						"user": "-"
+					});
+					self.getView().getModel("view").setProperty("/loggedIn", false);
+					self.getOwnerComponent().getModel("default").refresh();
+					self.getOwnerComponent().getModel("session").setProperty("/username", "");
+				},
+				error: function (e) {
+					// log error in browser
+					MessageBox.error(e.message);
+				}
+			});
+		},
+		login() {
 			var self = this;
 			$.ajax({
 				type: "POST",
@@ -64,17 +132,20 @@ sap.ui.define([
 				success: function (result) {
 					// process result
 					self.getOwnerComponent().getModel("default").changeHttpHeaders({
-						"auth_guid" : result.auth_guid,
-						"user" : self.username.getValue()
-					})
+						"auth_guid": result.auth_guid,
+						"user": self.username.getValue()
+					});
 					self.getView().getModel("view").setProperty("/loggedIn", true);
+					self.getView().getModel("view").setProperty("/auth_guid", result.auth_guid);
+					self.getView().getModel("view").setProperty("/user", self.username.getValue());
+					self.getOwnerComponent().getModel("session").setProperty("/username",self.username.getValue());
 					self.getOwnerComponent().getModel("default").refresh();
 				},
 				error: function (e) {
-					 // log error in browser
-					console.log(e.message);
+					// log error in browser
+					MessageBox.error(e.message);
 				}
-			})
+			});
 		},
 		onSideNavButtonPress: function () {
 			var oToolPage = this.byId("toolPage");
